@@ -1,0 +1,17 @@
+<div>
+    <div ng-if="!restaurantData">
+       <img src="static/assets/image/loading.gif"/>
+    </div>
+
+    <div ng-if="restaurantData">
+        <p>{{ restaurantData.name }}</p>
+        <img ng-src="{{ restaurantData.image }}"/>
+        <p ng-if="!restaurantData.image">No image available</p>
+        <p>{{ restaurantData.street_address }}</p>
+        <p>{{ restaurantData.city }}, {{ restaurantData.state }} {{ restaurantData.zip_code }}</p>
+        <p>Phone Number: {{ restaurantData.phone_number }}</p>
+        {{ restaurantData }}
+        <button ng-click="getNewRestaurant()">Try Again</button>
+    </div>
+</div>
+

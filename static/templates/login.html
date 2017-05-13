@@ -1,0 +1,15 @@
+{% extends 'templates/base.html' %}
+{% block content %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div>
+            <span>Username: </span><input type="text" name="username">
+        </div>
+        <div>
+            <span>Password: </span><input type="password" name="password">
+        </div>
+        <input type="submit" value="Login">
+    </form>
+    <div>{{ message }}</div>
+    <p>Don't have an account? <a href="{% url 'sign_up' %}">Create one now.</a></p>
+{% endblock %}

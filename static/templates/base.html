@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Finder</title>
+    <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/style.css"%}" rel="stylesheet"/>
+</head>
+<body ng-app="foodFinderApp">
+    <nav class="navbar navbar-default" role="navigation" bs-navbar>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/">Food Finder</a>
+        </div>
+        {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
+                <li data-match-route="/visits"><a href="#/visits">Previous Visits</a></li>
+            </ul>
+        {% endif %}
+        <ul class="nav navbar-nav navbar-right padding-right-15">
+            {% if user.is_authenticated %}
+                <li data-match-route="/logout"><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li data-match-route="/login"><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+
+    <script src="{% static "assets/js/angular.min.js" %}"></script>
+    <script src="{% static "assets/js/angular-route.min.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+    <script src="{% static "app/app.js" %}"></script>
+    <script src="{% static "app/controllers/main-controller.js" %}"></script>
+    <script src="{% static "app/controllers/home-controller.js" %}"></script>
+    <script src="{% static "app/controllers/random-controller.js" %}"></script>
+    <script src="{% static "app/routes.js" %}"></script>
+</body>
+</html>

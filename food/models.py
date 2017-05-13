@@ -20,8 +20,8 @@ class Restaurant(models.Model):
         return self.name
 
 
-class Visit(models.Model):
+class Result(models.Model):
     user = models.ForeignKey(User)
     restaurant = models.ForeignKey(Restaurant)
-    visit_date = models.DateField(default=timezone.now)
+    result_date = models.DateField(default=timezone.now)
     rating = models.IntegerField()

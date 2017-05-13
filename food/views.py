@@ -9,9 +9,15 @@ from food.models import Restaurant
 from food_finder.settings import GOOGLE_PLACES_API
 
 
+def index(request):
+    return render(request, '../static/templates/index.html')
+
+
 class RandomRestaurantView(APIView):
     def get(self, request):
-        location = "37.7197794,-122.43551670000001" # testing coords
+        latitude = str(request.query_params['latitude'])
+        longitude = str(request.query_params['longitude'])
+        location = "{latitude},{longitude}".format(latitude=latitude, longitude=longitude)
         restaurant_dict = self.get_random_restaurant(location)
         return Response(restaurant_dict)
 
@@ -80,3 +86,11 @@ class RandomRestaurantView(APIView):
         return photo_request.url
 
 
+class PreviousResultView(APIView):
+    def get(self, request):
+        pass
+
+
+class ResultDetailView(APIView):
+    def get(self, request):
+        pass
