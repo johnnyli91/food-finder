@@ -1,4 +1,7 @@
 <div class="results-container">
+    <div ng-if="!hasResults">
+        No Previous Results.
+    </div>
     <div ng-repeat="(location, restaurants) in previousResults">
         <h2>{{ location }}</h2>
         <table class="table result-table">

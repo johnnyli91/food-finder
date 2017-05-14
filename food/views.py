@@ -94,7 +94,7 @@ class PreviousResultView(APIView):
     def get(self, request):
         user = request.user
         previous_results = Result.objects.filter(user=user).select_related('restaurant')
-        result_dict = {}
+        result_dict = {'data': {}}
 
         for result in previous_results:
             location = "{state} - {city}".format(state=result.restaurant.state, city=result.restaurant.city)
@@ -104,9 +104,15 @@ class PreviousResultView(APIView):
                 'rating': result.rating
             }
             try:
-                result_dict[location].append(result_data)
+                result_dict['data'][location].append(result_data)
             except KeyError:
-                result_dict[location] = [result_data]
+                result_dict['data'][location] = [result_data]
+
+        if previous_results:
+            result_dict['has_results'] = True
+        else:
+            result_dict['has_results'] = False
+
         return Response(result_dict)
 
 

@@ -71,7 +71,30 @@
     color: white;
 }
 
+.blue-button {
+    padding: 7px 10px;
+    background-color: #007acc;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
+.cancel-button-button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 7px;
+}
+
 .cancel-button, .cancel-button:hover {
+    padding: 9px 10px;
     color: black;
+    background-color: #e7e7e7;
     text-decoration: none;
+    border-radius: 10px;
+}
+
+.login-input {
+    padding: 4px 3px;
+    width: 250px;
 }

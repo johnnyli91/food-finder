@@ -5,14 +5,14 @@
         <form method="post" class="auth-form" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="margin-bot-5">
-                <input type="text" name="username" placeholder="Username">
+                <input type="text" name="username" placeholder="Username" class="login-input">
             </div>
             <div class="margin-bot-5">
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="password" placeholder="Password" class="login-input">
             </div>
             <p>Don't have an account? <a href="{% url 'sign_up' %}">Create one now.</a></p>
-            <input type="submit" value="Login">
-            <button><a href="{% url 'index' %}" class="cancel-button">Cancel</a></button>
+            <input type="submit" value="Login" class="blue-button">
+            <button class="cancel-button-button"><a href="{% url 'index' %}" class="cancel-button">Cancel</a></button>
         </form>
         <div class="error-message">{{ message }}</div>
     </div>
