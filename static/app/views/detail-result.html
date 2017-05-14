@@ -1,11 +1,14 @@
-<div>
-    <p>{{ resultData.name }}</p>
-    <img ng-src="{{ resultData.image }}"/>
+<div class="results-container">
+    <h1>{{ resultData.name }}</h1>
+    <img ng-if="resultData.image" ng-src="{{ resultData.image }}"/>
+    <img ng-if="!resultData.image" class="no-image" src="static/assets/image/not_available.png"/>
     <p ng-if="!resultData.image">No image available</p>
-    <div uib-rating ng-model="resultData['rating']"
-         titles="ratingTitles" max="5"
-         ng-click="updateRating()" class="no-highlight-select"></div>
-    <p>{{ resultData.street_address }}</p>
-    <p>{{ resultData.city }}, {{ resultData.state }} {{ resultData.zip_code }}</p>
-    <p>Phone Number: {{ resultData.phone_number }}</p>
+    <div>
+        <span uib-rating ng-model="resultData['rating']"
+             titles="ratingTitles" max="5"
+             ng-click="updateRating()" class="no-highlight-select"></span>
+        </div>
+    <div class="margin-top-15">{{ resultData.street_address }}</div>
+    <div>{{ resultData.city }}, {{ resultData.state }} {{ resultData.zip_code }}</div>
+    <div class="margin-top-10">Phone Number: {{ resultData.phone_number }}</div>
 </div>

@@ -1,11 +1,17 @@
-<div>
+<div class="results-container">
     <div ng-repeat="(location, restaurants) in previousResults">
         <h2>{{ location }}</h2>
-        <div ng-repeat="restaurant in restaurants">
-            <a ng-href="#/detail_result/{{ restaurant.result_id }}">{{ restaurant.restaurant_name }}</a>
-            <span uib-rating ng-if="restaurant.rating" ng-model="restaurant.rating"
-                  max="5" readonly="true" titles="ratingTitles"></span>
-            <span ng-if="!restaurant.rating">Unrated</span>
-        </div>
+        <table class="table result-table">
+            <tr ng-repeat="restaurant in restaurants">
+                <td class="result-table-row-cell">
+                    <a ng-href="#/detail_result/{{ restaurant.result_id }}">{{ restaurant.restaurant_name }}</a>
+                </td>
+                <td class="result-table-row-cell">
+                    <span uib-rating ng-if="restaurant.rating" ng-model="restaurant.rating"
+                          max="5" readonly="true" titles="ratingTitles"></span>
+                    <span ng-if="!restaurant.rating">Unrated</span>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

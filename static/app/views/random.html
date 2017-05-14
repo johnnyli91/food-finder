@@ -1,16 +1,16 @@
-<div>
+<div class="results-container">
     <div ng-if="!restaurantData">
        <img src="static/assets/image/loading.gif"/>
     </div>
 
     <div ng-if="restaurantData">
-        <p>{{ restaurantData.name }}</p>
-        <img ng-src="{{ restaurantData.image }}"/>
+        <h1>{{ restaurantData.name }}</h1>
+        <img ng-if="restaurantData.image" ng-src="{{ restaurantData.image }}"/>
+        <img ng-if="!restaurantData.image" class="no-image" src="static/assets/image/not_available.png"/>
         <p ng-if="!restaurantData.image">No image available</p>
-        <p>{{ restaurantData.street_address }}</p>
-        <p>{{ restaurantData.city }}, {{ restaurantData.state }} {{ restaurantData.zip_code }}</p>
-        <p>Phone Number: {{ restaurantData.phone_number }}</p>
-        {{ restaurantData }}
+        <div class="margin-top-15">{{ restaurantData.street_address }}</div>
+        <div>{{ restaurantData.city }}, {{ restaurantData.state }} {{ restaurantData.zip_code }}</div>
+        <div class="margin-top-10 margin-bot-5">Phone Number: {{ restaurantData.phone_number }}</div>
         <button ng-click="getNewRestaurant()">Try Again</button>
     </div>
 </div>

@@ -1,17 +1,21 @@
 {% extends 'templates/base.html' %}
 {% block content %}
-    <form method="post" action="{% url 'sign_up' %}">
-        {% csrf_token %}
-        <div>
-            <span>Username: </span><input type="text" name="username">
-        </div>
-        <div>
-            <span>Password: </span><input type="password" name="password">
-        </div>
-        <div>
-            <span>Confirm Password: </span><input type="password" name="retype_password">
-        </div>
-        <input type="submit" value="Create Account">
-    </form>
-    <div>{{ message }}</div>
+    <div class="auth-container">
+        <h2>Create an Account</h2>
+        <form method="post" class="auth-form" action="{% url 'sign_up' %}">
+            {% csrf_token %}
+            <div class="margin-bot-5">
+                <input type="text" name="username" placeholder="Username">
+            </div>
+            <div class="margin-bot-5">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div class="margin-bot-5">
+                <input type="password" name="retype_password" placeholder="Confirm Password">
+            </div>
+            <input type="submit" value="Create Account">
+            <button><a href="{% url 'index' %}" class="cancel-button">Cancel</a></button>
+        </form>
+        <div class="error-message">{{ message }}</div>
+    </div>
 {% endblock %}

@@ -42,6 +42,10 @@ def sign_up(request):
 
         if password != retype_password:
             context_dict['message'] = "Passwords don't match."
+        elif not username:
+            context_dict['message'] = "Username can't be blank."
+        elif not password:
+            context_dict['message'] = "Password can't be blank."
         else:
             try:
                 User.objects.get(username=username)
