@@ -1,0 +1,11 @@
+<div>
+    <p>{{ resultData.name }}</p>
+    <img ng-src="{{ resultData.image }}"/>
+    <p ng-if="!resultData.image">No image available</p>
+    <div uib-rating ng-model="resultData['rating']"
+         titles="ratingTitles" max="5"
+         ng-click="updateRating()" class="no-highlight-select"></div>
+    <p>{{ resultData.street_address }}</p>
+    <p>{{ resultData.city }}, {{ resultData.state }} {{ resultData.zip_code }}</p>
+    <p>Phone Number: {{ resultData.phone_number }}</p>
+</div>

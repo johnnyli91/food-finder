@@ -1,3 +1,7 @@
 .padding-right-15 {
     padding-right: 15px;
 }
+
+.no-highlight-select {
+    outline: none;
+}

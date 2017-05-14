@@ -24,4 +24,7 @@ class Result(models.Model):
     user = models.ForeignKey(User)
     restaurant = models.ForeignKey(Restaurant)
     result_date = models.DateField(default=timezone.now)
-    rating = models.IntegerField()
+    rating = models.IntegerField(null=True)
+
+    def __unicode__(self):
+        return "{} - {}".format(self.user.username, self.restaurant.name)

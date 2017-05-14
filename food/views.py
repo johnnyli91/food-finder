@@ -5,7 +5,7 @@ import random
 import requests
 from django.shortcuts import render
 from rest_framework.views import APIView, Response
-from food.models import Restaurant
+from food.models import Restaurant, Result
 from food_finder.settings import GOOGLE_PLACES_API
 
 
@@ -15,13 +15,14 @@ def index(request):
 
 class RandomRestaurantView(APIView):
     def get(self, request):
+        user = request.user
         latitude = str(request.query_params['latitude'])
         longitude = str(request.query_params['longitude'])
         location = "{latitude},{longitude}".format(latitude=latitude, longitude=longitude)
-        restaurant_dict = self.get_random_restaurant(location)
+        restaurant_dict = self.get_random_restaurant(location, user)
         return Response(restaurant_dict)
 
-    def get_random_restaurant(self, location):
+    def get_random_restaurant(self, location, user):
         SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
         MAX_SEARCH_RADIUS = 500
 
@@ -32,12 +33,12 @@ class RandomRestaurantView(APIView):
         restaurant_results = search_result_json['results']
         random_place_id = random.choice([restaurant['place_id'] for restaurant in restaurant_results])
 
-        random_restaurant = self.get_restaurant_details(random_place_id)
+        random_restaurant = self.get_restaurant_details(random_place_id, user)
         restaurant_dict = {'restaurant': random_restaurant}
 
         return restaurant_dict
 
-    def get_restaurant_details(self, place_id):
+    def get_restaurant_details(self, place_id, user):
         try:
             restaurant = Restaurant.objects.get(place_id=place_id)
         except Restaurant.DoesNotExist:
@@ -67,6 +68,9 @@ class RandomRestaurantView(APIView):
                                                    state=state, zip_code=zip_code, image=photo,
                                                    place_id=place_id)
 
+        if user.is_authenticated():
+            Result.objects.get_or_create(restaurant=restaurant, user=user)
+
         restaurant_details = {'name': restaurant.name,
                               'phone_number': restaurant.phone_number,
                               'street_address': restaurant.street_address,
@@ -88,9 +92,64 @@ class RandomRestaurantView(APIView):
 
 class PreviousResultView(APIView):
     def get(self, request):
-        pass
+        user = request.user
+        previous_results = Result.objects.filter(user=user).select_related('restaurant')
+        result_dict = {}
+
+        for result in previous_results:
+            location = "{state} - {city}".format(state=result.restaurant.state, city=result.restaurant.city)
+            result_data = {
+                'restaurant_name': result.restaurant.name,
+                'result_id': result.id,
+                'rating': result.rating
+            }
+            try:
+                result_dict[location].append(result_data)
+            except KeyError:
+                result_dict[location] = [result_data]
+        return Response(result_dict)
 
 
 class ResultDetailView(APIView):
     def get(self, request):
-        pass
+        user = request.user
+        result_id = int(request.query_params['result_id'])
+        response_dict = {}
+        try:
+            previous_result = Result.objects.select_related('restaurant').get(id=result_id, user=user)
+        except Result.DoesNotExist:
+            previous_result = None
+
+        if not previous_result:
+            response_dict['success'] = False
+        else:
+            response_dict['success'] = True
+            response_dict['data'] = {
+                'name': previous_result.restaurant.name,
+                'phone_number': previous_result.restaurant.phone_number,
+                'street_address': previous_result.restaurant.street_address,
+                'city': previous_result.restaurant.city,
+                'state': previous_result.restaurant.state,
+                'zip_code': previous_result.restaurant.zip_code,
+                'image': previous_result.restaurant.image,
+                'place_id': previous_result.restaurant.place_id,
+                'rating': previous_result.rating,
+                'result_id': previous_result.id
+            }
+        return Response(response_dict)
+
+    def post(self, request):
+        response_dict = {}
+        user = request.user
+        result_id = int(request.data['result_id'])
+        rating = int(request.data['rating'])
+
+        try:
+            result = Result.objects.get(id=result_id, user=user)
+            result.rating = rating
+            result.save()
+            response_dict['success'] = True
+        except Result.DoesNotExist:
+            response_dict['success'] = False
+
+        return Response(response_dict)

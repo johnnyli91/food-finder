@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Food Finder</title>
     <link href="{% static "assets/css/bootstrap.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/ui-bootstrap-0.14.3-csp.css" %}" rel="stylesheet"/>
     <link href="{% static "assets/css/style.css"%}" rel="stylesheet"/>
 </head>
 <body ng-app="foodFinderApp">
@@ -15,7 +16,7 @@
         </div>
         {% if user.is_authenticated %}
             <ul class="nav navbar-nav">
-                <li data-match-route="/visits"><a href="#/visits">Previous Visits</a></li>
+                <li data-match-route="/visits"><a href="#/previous_results">Previous Results</a></li>
             </ul>
         {% endif %}
         <ul class="nav navbar-nav navbar-right padding-right-15">
@@ -32,10 +33,14 @@
     <script src="{% static "assets/js/angular-route.min.js" %}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+    <script src="{% static "assets/js/ui-bootstrap-0.14.3.min.js" %}"></script>
+    <script src="{% static "assets/js/ui-bootstrap-tpls-0.14.3.min.js" %}"></script>
     <script src="{% static "app/app.js" %}"></script>
     <script src="{% static "app/controllers/main-controller.js" %}"></script>
     <script src="{% static "app/controllers/home-controller.js" %}"></script>
     <script src="{% static "app/controllers/random-controller.js" %}"></script>
+    <script src="{% static "app/controllers/previous-results-controller.js" %}"></script>
+    <script src="{% static "app/controllers/result-detail-controller.js" %}"></script>
     <script src="{% static "app/routes.js" %}"></script>
 </body>
 </html>
