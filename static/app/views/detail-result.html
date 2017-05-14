@@ -1,9 +1,9 @@
 <div class="results-container">
     <h1>{{ resultData.name }}</h1>
-    <img ng-if="resultData.image" ng-src="{{ resultData.image }}"/>
+    <img ng-if="resultData.image" class="restaurant-image" ng-src="{{ resultData.image }}"/>
     <img ng-if="!resultData.image" class="no-image" src="static/assets/image/not_available.png"/>
     <p ng-if="!resultData.image">No image available</p>
-    <div>
+    <div class="margin-top-10">
         <span uib-rating ng-model="resultData['rating']"
              titles="ratingTitles" max="5"
              ng-click="updateRating()" class="no-highlight-select"></span>

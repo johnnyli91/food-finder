@@ -5,7 +5,7 @@
 
     <div ng-if="restaurantData">
         <h1>{{ restaurantData.name }}</h1>
-        <img ng-if="restaurantData.image" ng-src="{{ restaurantData.image }}"/>
+        <img ng-if="restaurantData.image" class="restaurant-image" ng-src="{{ restaurantData.image }}"/>
         <img ng-if="!restaurantData.image" class="no-image" src="static/assets/image/not_available.png"/>
         <p ng-if="!restaurantData.image">No image available</p>
         <div class="margin-top-15">{{ restaurantData.street_address }}</div>
