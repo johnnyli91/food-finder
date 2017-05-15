@@ -15,8 +15,17 @@
     text-align: center;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .results-container {
     text-align: center;
+    width: 55%;
+    margin: 0 auto;
+    border: 1px solid;
+    padding: 15px;
+    box-shadow: 4px 4px 5px #888888
 }
 
 .no-image {
